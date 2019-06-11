@@ -1,28 +1,30 @@
 #!/bin/bash
+set -x
 export PATH="$PATH:/usr/local/bin"
-#docker-compose build maven-app-image-docker
+DIR=$(dirname $0)
+source $DIR/lib/function.sh
 case $BRANCH_NAME in
   qa)
    if [ -n "$(echo $BRANCH_NAME|grep '[a-zA-Z]')" ];then
-    tag=$BRANCH_NAME-$BUILD_ID-$(node -p "require('./package.json').version")
+    tag=$BRANCH_NAME-$(version)-$BUILD_ID
     dockerfile=Dockerfile.develop
     fi
     ;;
   develop)
   if [ -n "$(echo $BRANCH_NAME|grep '[a-zA-Z]')" ];then
-    tag=$BRANCH_NAME-$BUILD_ID-$(node -p "require('./package.json').version")
+    tag=$BRANCH_NAME-$(version)-$BUILD_ID
     dockerfile=Dockerfile.develop
     fi
     ;;
   master)
   if [ -n "$(echo $BRANCH_NAME|grep '[a-zA-Z]')" ];then
-    tag=$BRANCH_NAME-$BUILD_ID-$(node -p "require('./package.json').version")
+   tag=$BRANCH_NAME-$(version)-$BUILD_ID
    dockerfile=Dockerfile.prod
    fi
     ;;
   *)
   echo $BRANCH_NAME
-    tag=$BRANCH_NAME-$BUILD_ID-$(node -p "require('./package.json').version")
+    tag=$BRANCH_NAME-$(version)-$BUILD_ID
     dockerfile=Dockerfile.develop
 esac
 

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+LOGFILE="scan_report.log"
+
 function start_db() {
 docker-compose -f $(dirname $0)/scanner.yml up -d || :
 }
@@ -15,7 +17,7 @@ function start_scan_local() {
 local IMAGE=$1
 IP=$(docker network inspect bridge --format "{{range .IPAM.Config}}{{.Gateway}}{{end}}")
 setup $1
-CMD="--ip $IP -t High -l scan_report.log -r image_scan.json $IMAGE"
+CMD="--ip $IP -t Critical -l $LOGFILE $IMAGE"
 echo -e "Scanning is being done for image for Critical Vulnerabilities: $IMAGE"
 ./$(dirname $0)/docker/scanner/clair-scanner $CMD
 }

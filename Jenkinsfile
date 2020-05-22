@@ -122,6 +122,19 @@ pipeline {
         sh 'echo STATUS = $SCAN_STATUS'
       }
     }
+    success {
+      // notify users when the Pipeline is success
+    script {
+        env.SCAN_STATUS = readFile('output.txt').trim()
+        if (env.SCAN_STATUS == 'fail') {
+         emailext (attachmentsPattern: 'scan_report.log',
+                body: "${currentBuild.result}: ${BUILD_URL}", //compressLog: true,
+                subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
+               // recipientProviders: [[$class: 'CulpritsRecipientProvider'],[$class: 'RequesterRecipientProvider']],
+                to: 'subham.jack2011@gmail.com')
+          }
+    }
+    }
     fixed {
       emailext (attachLog: true, body: "${currentBuild.result}: ${BUILD_URL}", compressLog: true, 
                 subject: "Jenkins build back to normal: ${currentBuild.fullDisplayName}", 

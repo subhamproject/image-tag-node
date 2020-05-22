@@ -7,6 +7,7 @@ source $DIR/scan.sh
 
 TMP_IMG=$(mktemp)
 SCAN_LOG="scan_status.log"
+[ -s $SCAN_LOG ] && cat /dev/null > $SCAN_LOG
 
 [ $BRANCH_NAME == "master" ] && tag=$BRANCH_NAME-$(version) || tag=$BRANCH_NAME-$(version)-$BUILD_ID
 case $BRANCH_NAME in

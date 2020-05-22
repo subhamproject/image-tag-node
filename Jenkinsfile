@@ -118,14 +118,14 @@ pipeline {
     always {
       script {
         currentBuild.result = currentBuild.currentResult
-        env.SCAN_STATUS = readFile('output.txt').trim()
+        env.SCAN_STATUS = readFile('scan_status.log').trim()
         sh 'echo STATUS = $SCAN_STATUS'
       }
     }
     success {
       // notify users when the Pipeline is success
     script {
-        env.SCAN_STATUS = readFile('output.txt').trim()
+        env.SCAN_STATUS = readFile('scan_status.log').trim()
         if (env.SCAN_STATUS == 'fail') {
          emailext (attachmentsPattern: 'scan_report.log',
                 body: "${currentBuild.result}: ${BUILD_URL}", //compressLog: true,

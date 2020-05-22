@@ -6,7 +6,7 @@ source $DIR/scan.sh
 
 TMP_IMG=$(mktemp)
 SCAN_LOG="scan_status.log"
-IGNORE="$(dirname $0)/docker/.dockerfile"
+IGNORE="$(dirname $0)/docker/.dockerignore"
 
 echo ".git" > $IGNORE
 echo "scan_status.log" >> $IGNORE

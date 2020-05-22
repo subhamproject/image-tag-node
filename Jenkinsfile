@@ -6,8 +6,7 @@ pipeline {
     disableConcurrentBuilds()
   }
   environment {
-      NEXUS_USERNAME = credentials('NEXUS_USERNAME')
-      NEXUS_PASSWORD = credentials('NEXUS_PASSWORD')
+      NEXUS_PASSWORD = "subham"
    }
   agent any
   stages {
@@ -87,7 +86,7 @@ pipeline {
       when {
         environment name: 'CHANGE_ID', value: ''
         expression {
-          fileExists("SBI/service-manifest.txt")
+          fileExists("SBI/service-manifest.txts")
         }
       }
       steps {
@@ -123,7 +122,7 @@ pipeline {
       emailext (attachLog: true, body: "${currentBuild.result}: ${BUILD_URL}", compressLog: true, 
                 subject: "Jenkins build back to normal: ${currentBuild.fullDisplayName}", 
               //  recipientProviders: [[$class: 'CulpritsRecipientProvider'],[$class: 'RequesterRecipientProvider']],
-                to: 'smandal@rythmos.com')
+                to: 'subham.jack2011@gmail.com')
     }
     failure {
       // notify users when the Pipeline fails
@@ -131,14 +130,14 @@ pipeline {
                 body: "${currentBuild.result}: ${BUILD_URL}", compressLog: true, 
                 subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}", 
               //  recipientProviders: [[$class: 'CulpritsRecipientProvider'],[$class: 'RequesterRecipientProvider']],
-                to: 'smandal@rythmos.com')
+                to: 'subham.jack2011@gmail.com')
     }
     unstable {
       // notify users when the Pipeline unstable
       emailext (attachLog: true, body: "${currentBuild.result}: ${BUILD_URL}", compressLog: true, 
                 subject: "Unstable Pipeline: ${currentBuild.fullDisplayName}", 
                // recipientProviders: [[$class: 'CulpritsRecipientProvider'],[$class: 'RequesterRecipientProvider']],
-                to: 'smandal@rythmos.com')
+                to: 'subham.jack2011@gmail.com')
     }
   }
 }

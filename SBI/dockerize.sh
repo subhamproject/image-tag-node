@@ -6,6 +6,12 @@ source $DIR/scan.sh
 
 TMP_IMG=$(mktemp)
 SCAN_LOG="scan_status.log"
+IGNORE="$(dirname $0)/docker/.dockerfile"
+
+echo ".git" > $IGNORE
+echo "scan_status.log" >> $IGNORE
+echo "scan_report.log" >> $IGNORE
+
 [ -f $LOGFILE ] && cat /dev/null > $LOGFILE
 [ -s $SCAN_LOG ] && cat /dev/null > $SCAN_LOG
 
@@ -42,3 +48,4 @@ cat /dev/null > $TMP_IMG
 done
 
 echo $SCAN_STATUS > $SCAN_LOG
+rm -f $IGNORE

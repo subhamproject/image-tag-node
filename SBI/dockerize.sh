@@ -38,3 +38,5 @@ start_scan_local "$(cat $TMP_IMG| tail -n1|awk '{print $3}')"
 [ $? -ne 0 ] && { export SCAN_STATUS=fail ; echo "Image has vulnerabilities,Please check and fix" ; } || :
 cat /dev/null > $TMP_IMG
 done
+
+echo $SCAN_STATUS > output.txt

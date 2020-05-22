@@ -75,6 +75,7 @@ pipeline {
         }
       }
       steps {
+        ansiColor('xterm') {
         script {
           sh '''
             SBI/dockerize.sh
@@ -82,6 +83,7 @@ pipeline {
         }
       }
     }
+ }
     stage('Deploy') {
       when {
         environment name: 'CHANGE_ID', value: ''
@@ -116,6 +118,8 @@ pipeline {
     always {
       script {
         currentBuild.result = currentBuild.currentResult
+        env.SCAN_STATUS = readFile('output.txt').trim()
+        sh 'echo STATUS = $SCAN_STATUS'
       }
     }
     fixed {
